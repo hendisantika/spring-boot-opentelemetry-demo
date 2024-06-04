@@ -30,4 +30,14 @@ public class PromotionController {
         //randomWait();
         return promotionRepository.findAll();
     }
+
+    private void randomWait() {
+        int waitSeconds = getRandomNumber(0, 3);
+        log.info("Sleeping for {} seconds", waitSeconds);
+        try {
+            Thread.sleep(waitSeconds * 1000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
