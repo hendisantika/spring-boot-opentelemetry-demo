@@ -40,4 +40,8 @@ public class PromotionController {
             throw new RuntimeException(e);
         }
     }
+
+    private int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
 }
