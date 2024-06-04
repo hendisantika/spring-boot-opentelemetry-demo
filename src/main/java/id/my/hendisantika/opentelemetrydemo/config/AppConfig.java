@@ -2,9 +2,11 @@ package id.my.hendisantika.opentelemetrydemo.config;
 
 import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporter;
 import io.opentelemetry.exporter.jaeger.JaegerGrpcSpanExporterBuilder;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +33,11 @@ public class AppConfig {
         if (timeout != null) {
             builder.setTimeout(timeout, TimeUnit.MILLISECONDS);
         }
+        return builder.build();
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
 }
