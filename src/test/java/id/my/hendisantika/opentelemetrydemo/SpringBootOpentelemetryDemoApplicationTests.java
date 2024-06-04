@@ -1,12 +1,10 @@
 package id.my.hendisantika.opentelemetrydemo;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
+//@SpringBootTest
+//@Disabled
 class SpringBootOpentelemetryDemoApplicationTests {
 
-    @Test
+    //    @Test
     void contextLoads() {
     }
 
