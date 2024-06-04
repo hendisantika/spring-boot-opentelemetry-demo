@@ -1,9 +1,13 @@
 package id.my.hendisantika.promotionservice.controller;
 
+import id.my.hendisantika.promotionservice.domain.Promotion;
 import id.my.hendisantika.promotionservice.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,4 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PromotionController {
     private final PromotionRepository promotionRepository;
+
+    @GetMapping("/api/promotions")
+    public List<Promotion> getPromotions() {
+        //randomWait();
+        return promotionRepository.findAll();
+    }
 }
