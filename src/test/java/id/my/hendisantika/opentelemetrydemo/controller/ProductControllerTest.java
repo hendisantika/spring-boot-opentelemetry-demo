@@ -1,14 +1,21 @@
 package id.my.hendisantika.opentelemetrydemo.controller;
 
+import id.my.hendisantika.opentelemetrydemo.domain.Product;
+import id.my.hendisantika.opentelemetrydemo.repository.ProductRepository;
 import id.my.hendisantika.opentelemetrydemo.service.PromotionServiceClient;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
+
+import java.math.BigDecimal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,5 +50,17 @@ class ProductControllerTest {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
+    }
+
+    @Autowired
+    ProductRepository repository;
+    @Autowired
+    private MockMvc mockMvc;
+
+    @BeforeEach
+    void setUp() {
+        repository.deleteAll();
+        Product p1 = new Product(1L, "Lenovo Laptop", new BigDecimal(65000));
+        repository.save(p1);
     }
 }
