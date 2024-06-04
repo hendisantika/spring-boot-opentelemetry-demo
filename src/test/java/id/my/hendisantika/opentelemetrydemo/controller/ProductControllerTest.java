@@ -87,4 +87,16 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$[0].discount", Matchers.equalTo(3000)))
                 .andExpect(jsonPath("$[0].price", Matchers.equalTo(62000.0)));
     }
+
+    @Test
+    void shouldReturnAllProductsWithoutPromotions() throws Exception {
+        mockMvc.perform(get("/api/products"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", Matchers.equalTo(1)))
+                .andExpect(jsonPath("$[0].id", Matchers.equalTo(1)))
+                .andExpect(jsonPath("$[0].name", Matchers.equalTo("Lenovo Laptop")))
+                .andExpect(jsonPath("$[0].originalPrice", Matchers.equalTo(65000.0)))
+                .andExpect(jsonPath("$[0].discount", Matchers.equalTo(0)))
+                .andExpect(jsonPath("$[0].price", Matchers.equalTo(65000.0)));
+    }
 }
