@@ -2,7 +2,7 @@ services:
   product-service:
     image: hendisantika/product-service
     container_name: product-service
-    build: ./product-service
+    build: .
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
