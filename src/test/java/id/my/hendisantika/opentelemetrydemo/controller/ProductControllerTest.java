@@ -1,11 +1,14 @@
 package id.my.hendisantika.opentelemetrydemo.controller;
 
 import id.my.hendisantika.opentelemetrydemo.domain.Product;
+import id.my.hendisantika.opentelemetrydemo.domain.Promotion;
 import id.my.hendisantika.opentelemetrydemo.repository.ProductRepository;
 import id.my.hendisantika.opentelemetrydemo.service.PromotionServiceClient;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +19,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by IntelliJ IDEA.
@@ -62,5 +71,20 @@ class ProductControllerTest {
         repository.deleteAll();
         Product p1 = new Product(1L, "Lenovo Laptop", new BigDecimal(65000));
         repository.save(p1);
+    }
+
+    @Test
+    void shouldReturnAllProductsWithPromotions() throws Exception {
+        given(promotionServiceClient.getProductPromotions()).willReturn(
+                List.of(new Promotion(null, 1L, new BigDecimal(3000)))
+        );
+        mockMvc.perform(get("/api/products"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", Matchers.equalTo(1)))
+                .andExpect(jsonPath("$[0].id", Matchers.equalTo(1)))
+                .andExpect(jsonPath("$[0].name", Matchers.equalTo("Lenovo Laptop")))
+                .andExpect(jsonPath("$[0].originalPrice", Matchers.equalTo(65000.0)))
+                .andExpect(jsonPath("$[0].discount", Matchers.equalTo(3000)))
+                .andExpect(jsonPath("$[0].price", Matchers.equalTo(62000.0)));
     }
 }
