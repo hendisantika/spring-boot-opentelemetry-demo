@@ -1,6 +1,7 @@
 package id.my.hendisantika.opentelemetrydemo.controller;
 
 import id.my.hendisantika.opentelemetrydemo.service.PromotionServiceClient;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,5 +29,10 @@ class ProductControllerTest {
     @BeforeAll
     static void beforeAll() {
         postgres.start();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        postgres.stop();
     }
 }
